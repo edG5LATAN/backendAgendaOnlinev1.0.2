@@ -48,4 +48,8 @@ public class ControllerContacto {
         return serviceContacto.buscarPorUsuario(id);
     }
 
+    @GetMapping("/buscarPorNombre/{nombre}")
+    public ResponseEntity buscarPorNombre(@PathVariable String nombre){
+        return serviceContacto.buscarPorNombre(nombre);
+    }
 }

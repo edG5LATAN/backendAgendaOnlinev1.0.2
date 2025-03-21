@@ -41,7 +41,7 @@ public class TokenService {
                     .verify(token);
 
         } catch (JWTVerificationException exception){
-            return exception.getMessage();
+            return exception.toString();
         }
         if(verifier.getSubject()==null){
             throw new RuntimeException("subject nulo");

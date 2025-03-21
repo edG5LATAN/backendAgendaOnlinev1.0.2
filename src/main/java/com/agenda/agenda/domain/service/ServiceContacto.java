@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Comparator;
 
 
 @Service
@@ -75,7 +76,15 @@ public class ServiceContacto {
             return ResponseEntity.ok("no se encontro usuario");
         }else {
             var contactos= repositoryContacto.buscarPorUsuario(usuario);
-            return ResponseEntity.ok(contactos.stream().map(DtoMostrarContacto::new).toList());
-        }
+            return ResponseEntity.ok(contactos.stream()
+                    .map(DtoMostrarContacto::new)
+                    .sorted(Comparator.comparing(DtoMostrarContacto::contacto))
+                    .toList());        }
+    }
+
+
+    public ResponseEntity buscarPorNombre(String nombre) {
+        var contacto=repositoryContacto.buscarContactoPorNombre(nombre);
+        return ResponseEntity.ok(contacto.stream().map(DtoMostrarContacto::new).toList());
     }
 }

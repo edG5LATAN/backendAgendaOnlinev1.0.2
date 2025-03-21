@@ -10,6 +10,6 @@ public record DtoUsuario(
         @NotNull String clave,
         @NotNull String imagen,
         @NotNull String telefono,
-        @NotNull Roles rol
+        @NotNull String direccion
 ) {
 }

@@ -4,6 +4,7 @@ package com.agenda.agenda.infra.security;
 import com.agenda.agenda.domain.repository.RepositoryUsuario;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.antlr.v4.runtime.Token;
@@ -26,14 +27,26 @@ public class FilterConfiguracion extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var auth= request.getHeader("Authorization");
-        if(auth!=null){
-            var token= auth.replace("Bearer ","");
-            if(token!=null){
-                var subject= tokenService.getSubeject(token);
-                var usuario= repositoryUsuario.findByCorreo(subject);
-                var autenticar= new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(autenticar);
+        Cookie[] cookies=request.getCookies();
+        String token=null;
+        if(cookies!=null){
+            for (Cookie cookie:cookies){
+                if("JWT".equals(cookie.getName())){
+                    token=cookie.getValue();
+                    break;
+                }
+            }
+        }
+        if(token!=null){
+            try {
+              var subject=tokenService.getSubeject(token);
+              if(subject!=null){
+                  var usuario= repositoryUsuario.findByCorreo(subject);
+                  var autenticar= new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
+                  SecurityContextHolder.getContext().setAuthentication(autenticar);
+              }
+            }catch (Exception e){
+                System.out.println(e.toString());
             }
         }
 

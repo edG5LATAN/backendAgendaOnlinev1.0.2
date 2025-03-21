@@ -23,6 +23,7 @@ public class Usuario implements UserDetails {
     private String user;
     private String imagen;
     private String telefono;
+    private String direccion;
     @Email
     @Column(unique = true)
     private String correo;
@@ -33,12 +34,13 @@ public class Usuario implements UserDetails {
     //contructor
     public Usuario() {
     }
-    public Usuario(Long id_usuario, String user, String imagen, String telefono,String correo, String clave, Roles rol) {
+    public Usuario(Long id_usuario, String user, String imagen, String telefono,String correo, String direccion,String clave, Roles rol) {
         this.id_usuario = id_usuario;
         this.user = user;
         this.imagen=imagen;
         this.telefono=telefono;
         this.correo = correo;
+        this.direccion=direccion;
         this.clave = clave;
         this.rol = rol;
     }
@@ -49,7 +51,8 @@ public class Usuario implements UserDetails {
         this.correo= dtoUsuario.correo();
         this.telefono= dtoUsuario.telefono();
         this.clave=clave;
-        this.rol=dtoUsuario.rol();
+        this.rol= Roles.valueOf("USER");
+        this.direccion= dtoUsuario.direccion();
     }
     // user details
     @Override
@@ -88,6 +91,14 @@ public class Usuario implements UserDetails {
     }
 
     //getter and setter
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public String getTelefono() {
         return telefono;
     }

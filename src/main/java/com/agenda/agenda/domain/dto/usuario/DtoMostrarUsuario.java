@@ -7,9 +7,10 @@ public record DtoMostrarUsuario(
        String user,
        String telefono,
        String  correo,
+       String direccion,
        String imagen
 ) {
     public DtoMostrarUsuario(Usuario usuario){
-        this(usuario.getId_usuario(), usuario.getUser(), usuario.getTelefono(),usuario.getCorreo(), usuario.getImagen());
+        this(usuario.getId_usuario(), usuario.getUser(), usuario.getTelefono(),usuario.getCorreo(), usuario.getDireccion(), usuario.getImagen());
     }
 }

@@ -30,7 +30,8 @@ public class AutenticacionConfiguracion {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(csr->csr.disable())
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(ht->ht.requestMatchers("/v1/usuario/mostrar","/v1/login/loguearse","/v1/usuario/crear")
+                .authorizeHttpRequests(ht->ht.requestMatchers("/v1/login/loguearse",
+                                "/v1/login/logout","/v1/usuario/crear")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -43,7 +44,7 @@ public class AutenticacionConfiguracion {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration= new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5730"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173/"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));

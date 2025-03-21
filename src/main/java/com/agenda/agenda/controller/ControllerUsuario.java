@@ -36,6 +36,4 @@ public class ControllerUsuario {
         return serviceUsuario.crear(dtoUsuario,uriComponentsBuilder);
     }
 
-
-
 }

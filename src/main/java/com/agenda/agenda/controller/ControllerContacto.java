@@ -49,7 +49,7 @@ public class ControllerContacto {
     }
 
     @GetMapping("/buscarPorNombre/{nombre}")
-    public ResponseEntity buscarPorNombre(@PathVariable String nombre){
+    public ResponseEntity buscarPorNombre(@PathVariable Long nombre){
         return serviceContacto.buscarPorNombre(nombre);
     }
 }

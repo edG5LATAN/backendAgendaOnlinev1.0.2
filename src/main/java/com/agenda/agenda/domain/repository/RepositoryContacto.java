@@ -17,6 +17,6 @@ public interface RepositoryContacto extends JpaRepository<Contacto,Long> {
     List<Contacto> buscarPorUsuario(Optional<Usuario> usuario);
 
     @Query("SELECT c FROM Contacto c WHERE c.contacto LIKE %:nombre%")
-    List<Contacto> buscarContactoPorNombre(String nombre);
+    List<Contacto> buscarContactoPorNombre(Long nombre);
 }
 

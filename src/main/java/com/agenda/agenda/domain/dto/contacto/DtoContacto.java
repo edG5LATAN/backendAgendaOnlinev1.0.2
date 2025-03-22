@@ -9,7 +9,7 @@ public record DtoContacto(
         @NotNull String telefono,
         @NotNull Direccion direccion,
         @NotNull RedesSociales redes,
-        @NotNull String usuario,
+        @NotNull Long usuario,
         @NotNull String imagen
         ) {
 }

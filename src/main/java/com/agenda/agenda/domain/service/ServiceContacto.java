@@ -39,11 +39,11 @@ public class ServiceContacto {
     }
 
     public ResponseEntity crear(DtoContacto dtoContacto, UriComponentsBuilder uriComponentsBuilder) {
-        var usuario= repositoryUsuario.findByUser(dtoContacto.usuario());
+        var usuario= repositoryUsuario.findById(dtoContacto.usuario());
         if(usuario==null){
             return ResponseEntity.notFound().build();
         }else {
-            var contacto = repositoryContacto.save(new Contacto(dtoContacto,usuario));
+            var contacto = repositoryContacto.save(new Contacto(dtoContacto,usuario.get()));
             URI url = uriComponentsBuilder.path("v1/contacto/unidad/{id}").buildAndExpand(contacto.getId_contacto()).toUri();
             return ResponseEntity.created(url).body(new DtoMostrarContacto(contacto));
         }
@@ -83,7 +83,7 @@ public class ServiceContacto {
     }
 
 
-    public ResponseEntity buscarPorNombre(String nombre) {
+    public ResponseEntity buscarPorNombre(Long nombre) {
         var contacto=repositoryContacto.buscarContactoPorNombre(nombre);
         return ResponseEntity.ok(contacto.stream().map(DtoMostrarContacto::new).toList());
     }
